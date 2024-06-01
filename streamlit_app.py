@@ -113,30 +113,35 @@ st.markdown('<div class="webcam-section">', unsafe_allow_html=True)
 use_webcam = st.checkbox('Use Webcam')
 if use_webcam:
     cap = cv2.VideoCapture(0)
-    cap.set(3, 1280)
-    cap.set(4, 720)
+    if not cap.isOpened():
+        st.error("Cannot open webcam. Please ensure a camera is connected.")
+    else:
+        cap.set(3, 1280)
+        cap.set(4, 720)
 
-    prev_frame_time = 0
+        prev_frame_time = 0
 
-    while True:
-        success, img = cap.read()
-        if not success:
-            st.write("Failed to capture image from webcam.")
-            break
+        while True:
+            success, img = cap.read()
+            if not success:
+                st.write("Failed to capture image from webcam.")
+                break
 
-        processed_image = process_image(img)
-        new_frame_time = time.time()
-        fps = 1 / (new_frame_time - prev_frame_time)
-        prev_frame_time = new_frame_time
+            processed_image = process_image(img)
+            new_frame_time = time.time()
+            fps = 1 / (new_frame_time - prev_frame_time)
+            prev_frame_time = new_frame_time
 
-        # Convert processed image back to RGB for displaying in Streamlit
-        processed_image_rgb = cv2.cvtColor(processed_image, cv2.COLOR_BGR2RGB)
-        st.image(processed_image_rgb, caption=f'Webcam (FPS: {fps:.2f})', use_column_width=True)
+            # Convert processed image back to RGB for displaying in Streamlit
+            processed_image_rgb = cv2.cvtColor(processed_image, cv2.COLOR_BGR2RGB)
+            st.image(processed_image_rgb, caption=f'Webcam (FPS: {fps:.2f})', use_column_width=True)
 
-        time.sleep(0.1)
+            time.sleep(0.1)
 
-        # This is needed to allow Streamlit to refresh the image display
-        st.experimental_rerun()
+            # This is needed to allow Streamlit to refresh the image display
+            st.experimental_rerun()
+
+        cap.release()
 else:
     st.write("Enable the webcam to start real-time object detection.")
 st.markdown('</div>', unsafe_allow_html=True)
