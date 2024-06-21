@@ -5,5 +5,3 @@ Pillow>=9.3.0
 numpy>=1.21.0,<1.25.0
 ultralytics>=8.0.25
 tensorflow>=2.5.0
-torch>=1.8.0,<1.14.0
-torchvision>=0.9.0,<0.12.0
