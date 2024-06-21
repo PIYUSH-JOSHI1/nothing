@@ -39,4 +39,3 @@ for frame in get_frame():
     frame = detect_objects(frame)
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     frame_placeholder.image(frame, channels="RGB")
-
