@@ -6,8 +6,8 @@ from PIL import Image
 
 st.title("Live Object Detection using Webcam")
 
-# Initialize the YOLO model
-model = YOLO('yolov5s.pt')
+# Initialize the YOLO model with YOLOv8 weights
+model = YOLO('yolov8l.pt')  # Make sure yolov8l.pt is available in the same directory or provide the correct path
 
 def detect_objects(frame):
     results = model(frame)
